@@ -1,0 +1,29 @@
+# prompt: implementation of logistic regression visual with s type graph
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LogisticRegression
+
+# Generate some sample data
+np.random.seed(0)
+X = np.random.randn(100, 1)
+y = (X > 0).astype(int).ravel()  # Create a binary classification problem
+
+# Create a logistic regression model
+model = LogisticRegression()
+
+# Fit the model to the data
+model.fit(X, y)
+
+# Generate a range of X values for plotting the S-curve
+X_test = np.linspace(-3, 3, 300).reshape(-1, 1)
+y_prob = model.predict_proba(X_test)[:, 1]  # Probability of class 1
+
+# Plot the S-curve
+plt.plot(X_test, y_prob, color='blue', label='Logistic Regression Curve')
+plt.scatter(X, y, c=y, cmap='viridis', label='Data Points')
+plt.xlabel('X')
+plt.ylabel('Probability of Class 1')
+plt.title('Logistic Regression')
+plt.legend()
+plt.show()
